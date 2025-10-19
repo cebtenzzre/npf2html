@@ -3,7 +3,7 @@ import {snapshotNpf2Html} from './utils';
 snapshotNpf2Html('with media: with everything', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     title: 'A Neat Song',
     artist: 'A Neat Singer',
     album: 'A Neat Record',
@@ -24,14 +24,14 @@ snapshotNpf2Html('with media: with everything', [
 snapshotNpf2Html('with media: with nothing', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
   },
 ]);
 
 snapshotNpf2Html('with media: with title only', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     title: 'A Neat Song',
   },
 ]);
@@ -39,7 +39,7 @@ snapshotNpf2Html('with media: with title only', [
 snapshotNpf2Html('with media: with artist only', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     artist: 'A Neat Singer',
   },
 ]);
@@ -47,7 +47,7 @@ snapshotNpf2Html('with media: with artist only', [
 snapshotNpf2Html('with media: with album only', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     album: 'A Neat Record',
   },
 ]);
@@ -55,7 +55,7 @@ snapshotNpf2Html('with media: with album only', [
 snapshotNpf2Html('with media: with poster only', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     poster: [
       {
         url: 'https://example.org/poster.jpg',
@@ -69,7 +69,7 @@ snapshotNpf2Html('with media: with poster only', [
 snapshotNpf2Html('with media: with attribution only', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     attribution: {
       type: 'link',
       url: 'https://example.org/',
@@ -80,7 +80,7 @@ snapshotNpf2Html('with media: with attribution only', [
 snapshotNpf2Html('with media: with title and album', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     title: 'A Neat Song',
     album: 'A Neat Record',
   },
@@ -89,7 +89,7 @@ snapshotNpf2Html('with media: with title and album', [
 snapshotNpf2Html('with media: with artist and album', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     artist: 'A Neat Singer',
     album: 'A Neat Record',
   },
@@ -98,7 +98,7 @@ snapshotNpf2Html('with media: with artist and album', [
 snapshotNpf2Html('with media: with title and artist', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     title: 'A Neat Song',
     artist: 'A Neat Singer',
   },
@@ -135,7 +135,7 @@ snapshotNpf2Html('with url: with nothing', [
 snapshotNpf2Html('prefers media to embed_html', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     embed_html: '<marquee>total nonsense</marquee>',
   },
 ]);
@@ -159,7 +159,7 @@ snapshotNpf2Html('prefers embed_url to url', [
 snapshotNpf2Html('with media: HTML-escapes title', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     title: '<&">',
   },
 ]);
@@ -167,7 +167,7 @@ snapshotNpf2Html('with media: HTML-escapes title', [
 snapshotNpf2Html('with media: HTML-escapes artist', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     artist: '<&">',
   },
 ]);
@@ -175,7 +175,7 @@ snapshotNpf2Html('with media: HTML-escapes artist', [
 snapshotNpf2Html('with media: HTML-escapes album', [
   {
     type: 'audio',
-    media: [{url: 'https://example.org/song.mp3'}],
+    media: {url: 'https://example.org/song.mp3'},
     album: '<&">',
   },
 ]);

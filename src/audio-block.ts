@@ -16,13 +16,13 @@ export interface AudioBlock {
    * The URL to use for the audio block. Either this, {@link media}, or both
    * will always be set.
    */
-  url?: string;
+  url?: string | null;
 
   /**
    * The {@link Media} to use for the audio block. Either this, {@link url}, or
    * both will always be set.
    */
-  media?: Media[];
+  media?: Media;
 
   /**
    * The provider of the audio source, whether it's `tumblr` for native audio or
@@ -70,7 +70,7 @@ export function renderAudio(renderer: Renderer, block: AudioBlock): string {
     const hasCaption = block.poster || block.attribution || hasText;
     if (block.media) {
       result +=
-        `<audio controls src="${renderer.escape(block.media[0].url)}">` +
+        `<audio controls src="${renderer.escape(block.media.url)}">` +
         '</audio>';
       if (hasCaption) result += '<figcaption>';
     } else {
