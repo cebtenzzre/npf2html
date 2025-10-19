@@ -32,7 +32,9 @@ export function renderAskLayout(
   html: string
 ): string {
   let result = `<div class="${renderer.prefix}-layout-ask">`;
-  if (layout.attribution) {
+
+  // cebtenzzre: omit huge avatar for consistency with legacy post HTML, until we come up with better styling
+  /* if (layout.attribution) {
     result += `<a href="${renderer.escape(layout.attribution.blog.url)}">`;
   } else {
     // Always wrap the avatar in an A tag even if there's nothing to link to to
@@ -41,7 +43,9 @@ export function renderAskLayout(
   }
   result +=
     renderer.renderImageMedia(renderer.askingAvatar) +
-    '</a><figure><figcaption>';
+    '</a><figure><figcaption>'; */
+  result += '<figure><figcaption>';
+
   if (layout.attribution) {
     result += `<a href="${renderer.escape(layout.attribution.blog.url)}">`;
   }

@@ -82,8 +82,9 @@ export interface IFrame {
 export function renderVideo(renderer: Renderer, block: VideoBlock): string {
   let result = `<figure class="${renderer.prefix}-block-video">`;
   if (block.media) {
+    // cebtenzzre: use controls for consistency with tumblr-utils rendering of legacy posts
     result +=
-      '<video src="' + renderer.escape(block.media?.url ?? block.url!) + '"';
+      '<video controls src="' + renderer.escape(block.media?.url ?? block.url!) + '"';
     if (block.poster) {
       result +=
         ' poster="' +

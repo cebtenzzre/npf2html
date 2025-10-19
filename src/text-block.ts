@@ -88,7 +88,8 @@ export function renderTextNoIndent(
     case 'quirky':
       return `<p class="${renderer.prefix}-block-text-quirky">${text}</p>`;
     case 'quote':
-      return `<p class="${renderer.prefix}-block-text-quote">${text}</p>`;
+      // cebtenzzre: use blockquote for consistency with legacy post HTML, until we come up with better styling
+      return `<blockquote class="${renderer.prefix}-block-text-quote"><p>${text}</p></blockquote>`;
     case 'chat':
       return `<p class="${renderer.prefix}-block-text-chat">${text}</p>`;
     default:
