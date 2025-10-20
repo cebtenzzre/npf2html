@@ -1,4 +1,4 @@
-import {Attribution} from './attribution';
+import {isAttribution, MaybeAttribution} from './attribution';
 import {VisualMedia} from './media';
 import {Renderer} from './renderer';
 
@@ -49,7 +49,7 @@ export interface VideoBlock {
   metadata?: Record<string, unknown>;
 
   /** Optional attribution information about where the video came from. */
-  attribution?: Attribution;
+  attribution?: MaybeAttribution;
 
   /** Whether this video can be played on a cellular connection. */
   can_autoplay_on_cellular?: boolean;
@@ -112,7 +112,7 @@ export function renderVideo(renderer: Renderer, block: VideoBlock): string {
       '</a>';
   }
 
-  if (block.attribution) {
+  if (isAttribution(block.attribution)) {
     result +=
       '<figcaption>' +
       renderer.renderAttribution(block.attribution) +

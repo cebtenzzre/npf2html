@@ -1,4 +1,4 @@
-import {Attribution} from './attribution';
+import {isAttribution, MaybeAttribution} from './attribution';
 import {VisualMedia} from './media';
 import {Renderer} from './renderer';
 
@@ -32,7 +32,7 @@ export interface ImageBlock {
   poster?: VisualMedia;
 
   /** @see https://www.tumblr.com/docs/npf#attributions */
-  attribution?: Attribution;
+  attribution?: MaybeAttribution;
 
   /** Text used to describe the image, for screen readers. */
   alt_text?: string;
@@ -55,7 +55,7 @@ export function renderImage(renderer: Renderer, block: ImageBlock): string {
     `<a href="${renderer.escape(highestResImage.url)}">` +
     renderer.renderImageMedia(block.media, {alt: block.alt_text}) +
     '</a>';
-  if (block.caption || block.attribution) {
+  if (block.caption || isAttribution(block.attribution)) {
     result += '<figcaption>';
     if (block.caption) {
       result +=
@@ -63,7 +63,7 @@ export function renderImage(renderer: Renderer, block: ImageBlock): string {
         renderer.escape(block.caption) +
         '</span>';
     }
-    if (block.attribution)
+    if (isAttribution(block.attribution))
       result += renderer.renderAttribution(block.attribution);
     result += '</figcaption>';
   }

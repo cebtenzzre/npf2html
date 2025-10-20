@@ -182,7 +182,9 @@ function buildFormatSpans(
   let codeUnitIndex = 0;
   let codePointIndex = 0;
   const end = Math.max(...formats.map(format => format.end));
-  while (codeUnitIndex < end) {
+  // cebtenzzre: loop by code points, not code units, since format.end is in code points
+  // Also guard against format.end being beyond the actual string length
+  while (codePointIndex < end && codeUnitIndex < text.length) {
     while (codePointIndex === formats[0]?.start) {
       open.push({format: formats.shift()!, start: codeUnitIndex, children: []});
     }
@@ -218,7 +220,8 @@ function buildFormatSpans(
 
   if (open.length > 0) spans.push({...open[0], end});
   for (let i = 1; i < open.length; i++) {
-    spans.at(-1)!.children.push({...open[i], end});
+    // cebtenzzre: we don't use `.at(-1)!` here because QuickJS doesn't support it
+    spans[spans.length - 1].children.push({...open[i], end});
   }
 
   return spans;

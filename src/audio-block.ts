@@ -1,4 +1,4 @@
-import {Attribution} from './attribution';
+import {isAttribution, MaybeAttribution} from './attribution';
 import {Media, VisualMedia} from './media';
 import {Renderer} from './renderer';
 
@@ -55,7 +55,7 @@ export interface AudioBlock {
   metadata?: Record<string, unknown>;
 
   /** Optional attribution information about where the audio track came from. */
-  attribution?: Attribution;
+  attribution?: MaybeAttribution;
 }
 
 /**
@@ -67,7 +67,7 @@ export function renderAudio(renderer: Renderer, block: AudioBlock): string {
   let result = `<figure class="${renderer.prefix}-block-audio">`;
   if (block.media || !(block.embed_html || block.embed_url)) {
     const hasText = block.title || block.artist || block.album;
-    const hasCaption = block.poster || block.attribution || hasText;
+    const hasCaption = block.poster || isAttribution(block.attribution) || hasText;
     if (block.media) {
       result +=
         `<audio controls src="${renderer.escape(block.media.url)}">` +
@@ -105,7 +105,7 @@ export function renderAudio(renderer: Renderer, block: AudioBlock): string {
       result += '</a>';
     }
 
-    if (block.attribution) {
+    if (isAttribution(block.attribution)) {
       if (!block.media) result += '<figcaption>';
       result += renderer.renderAttribution(block.attribution);
       if (!block.media) result += '</figcaption>';
@@ -117,7 +117,7 @@ export function renderAudio(renderer: Renderer, block: AudioBlock): string {
       ? block.embed_html
       : `<iframe src="${renderer.escape(block.embed_url!)}"></iframe>`;
 
-    if (block.attribution) {
+    if (isAttribution(block.attribution)) {
       result +=
         '<figcaption>' +
         renderer.renderAttribution(block.attribution) +

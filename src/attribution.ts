@@ -9,6 +9,17 @@ export type Attribution =
   | BlogAttribution
   | AppAttribution;
 
+// cebtenzzre: sometimes attribution is an empty array, I have seen this in the wild
+export type MaybeAttribution = Attribution | [];
+
+/**
+ * Type guard to check if {@link attr} is a valid Attribution object and not an
+ * empty array.
+ */
+export function isAttribution(attr?: MaybeAttribution): attr is Attribution {
+  return !!attr && 'type' in attr;
+}
+
 /**
  * Attributes an image to a particular post.
  *
