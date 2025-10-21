@@ -315,3 +315,13 @@ A truncation, also known as a "read more", looks like:
   ... <!-- content blocks -->
 </details>
 ```
+
+#### Condensed Layout
+
+The condensed layout is a [deprecated layout type](https://www.tumblr.com/docs/npf#layout-block-type-condensed) that is functionally equivalent to a rows layout with `truncate_after`. When encountered, it's automatically converted to use the truncate layout:
+
+- If `truncate_after` is specified, content is truncated after that block index
+- If `truncate_after` is not specified, content is truncated after the second-to-last block in the layout
+- The blocks in a condensed layout must be contiguous (no gaps in the block indices)
+
+The condensed layout produces the same HTML output as the truncate layout shown above.

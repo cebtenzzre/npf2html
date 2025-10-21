@@ -1,5 +1,6 @@
 import {AskLayout} from './ask-layout';
 import {AudioBlock} from './audio-block';
+import {CondensedLayout} from './condensed-layout';
 import {ImageBlock} from './image-block';
 import {LinkBlock} from './link-block';
 import {Options} from './options';
@@ -21,6 +22,7 @@ export {
 } from './attribution';
 export {AudioBlock} from './audio-block';
 export {BlogInfo} from './blog-info';
+export {CondensedLayout} from './condensed-layout';
 export {ImageBlock} from './image-block';
 export {LinkBlock} from './link-block';
 export {Media, VisualMedia} from './media';
@@ -76,7 +78,7 @@ export interface UnknownBlock extends Record<string, unknown> {
  *
  * @category Layout
  */
-export type Layout = AskLayout | RowsLayout;
+export type Layout = AskLayout | CondensedLayout | RowsLayout;
 
 /**
  * An interface for layouts that apply to specific adjacent groups of content
@@ -115,12 +117,13 @@ function buildLayoutGroups(options?: Options): LayoutGroup[] {
   for (const layout of options?.layout ?? []) {
     if (layout.type === 'ask') {
       result.push(layout);
-    } else {
+    } else if (layout.type === 'rows') {
       for (const display of layout.display) {
         if (display.blocks.length === 1) continue;
         result.push(display);
       }
     }
+    // condensed layouts are handled via truncate_after, not as layout groups
   }
 
   return result
@@ -145,9 +148,41 @@ export default function npf2html(
   const renderer = options?.renderer ?? new Renderer(options);
   let result = '';
 
-  const truncateAfter = options?.layout?.find(
-    layout => layout.type === 'rows'
-  )?.truncate_after;
+  // Handle truncate_after from both rows and condensed layouts
+  let truncateAfter: number | undefined;
+  for (const layout of options?.layout ?? []) {
+    if (layout.type === 'rows' && layout.truncate_after !== undefined) {
+      truncateAfter = layout.truncate_after;
+      break;
+    } else if (layout.type === 'condensed') {
+      // Validate that either blocks or truncate_after is present
+      if (layout.blocks === undefined && layout.truncate_after === undefined) {
+        throw new Error(
+          'Condensed layout requires either blocks or truncate_after to be present'
+        );
+      }
+
+      // Validate blocks if present (must be non-empty and [0, 1, 2, ..., n-1])
+      if (layout.blocks !== undefined) {
+        if (
+          layout.blocks.length === 0 ||
+          layout.blocks.some((block, i) => block !== i)
+        ) {
+          throw new Error(
+            `Condensed layout has invalid blocks: [${layout.blocks}]`
+          );
+        }
+      }
+
+      // Use truncate_after if set, otherwise use the last block in blocks
+      if (layout.truncate_after !== undefined) {
+        truncateAfter = layout.truncate_after;
+      } else if (layout.blocks !== undefined) {
+        truncateAfter = layout.blocks[layout.blocks.length - 1];
+      }
+      break;
+    }
+  }
   let truncateIndex: number | undefined;
 
   const layoutGroups = buildLayoutGroups(options);
