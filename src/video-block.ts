@@ -84,7 +84,9 @@ export function renderVideo(renderer: Renderer, block: VideoBlock): string {
   if (block.media) {
     // cebtenzzre: use controls for consistency with tumblr-utils rendering of legacy posts
     result +=
-      '<video controls src="' + renderer.escape(block.media?.url ?? block.url!) + '"';
+      '<video controls src="' +
+      renderer.escape(block.media?.url ?? block.url!) +
+      '"';
     if (block.poster) {
       result +=
         ' poster="' +

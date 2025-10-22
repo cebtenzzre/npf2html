@@ -67,7 +67,8 @@ export function renderAudio(renderer: Renderer, block: AudioBlock): string {
   let result = `<figure class="${renderer.prefix}-block-audio">`;
   if (block.media || !(block.embed_html || block.embed_url)) {
     const hasText = block.title || block.artist || block.album;
-    const hasCaption = block.poster || isAttribution(block.attribution) || hasText;
+    const hasCaption =
+      block.poster || isAttribution(block.attribution) || hasText;
     if (block.media) {
       result +=
         `<audio controls src="${renderer.escape(block.media.url)}">` +

@@ -17,4 +17,3 @@ export interface CondensedLayout {
    */
   truncate_after?: number;
 }
-
