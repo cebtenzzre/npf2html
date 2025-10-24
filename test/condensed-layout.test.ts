@@ -129,25 +129,35 @@ test('condensed with neither blocks nor truncate_after throws error', t => {
   );
 });
 
-test('condensed with empty blocks array throws error', t => {
-  const error = t.throws(
-    () =>
-      npf2html(
-        [
-          {type: 'text', text: 'one'},
-          {type: 'text', text: 'two'},
-        ],
-        {
-          layout: [
-            {
-              type: 'condensed',
-              blocks: [],
-            },
-          ],
-        }
-      ),
-    {instanceOf: Error}
-  );
+snapshotNpf2Html(
+  'condensed with truncate_after=-1 hides everything',
+  [
+    {type: 'text', text: 'one'},
+    {type: 'text', text: 'two'},
+    {type: 'text', text: 'three'},
+  ],
+  {
+    layout: [
+      {
+        type: 'condensed',
+        truncate_after: -1,
+      },
+    ],
+  }
+);
 
-  t.regex(error!.message, /Condensed layout has invalid blocks/);
-});
+snapshotNpf2Html(
+  'condensed with empty blocks hides everything',
+  [
+    {type: 'text', text: 'one'},
+    {type: 'text', text: 'two'},
+  ],
+  {
+    layout: [
+      {
+        type: 'condensed',
+        blocks: [],
+      },
+    ],
+  }
+);

@@ -162,12 +162,9 @@ export default function npf2html(
         );
       }
 
-      // Validate blocks if present (must be non-empty and [0, 1, 2, ..., n-1])
+      // Validate blocks if present (must be [0, 1, 2, ..., n-1])
       if (layout.blocks !== undefined) {
-        if (
-          layout.blocks.length === 0 ||
-          layout.blocks.some((block, i) => block !== i)
-        ) {
+        if (layout.blocks.some((block, i) => block !== i)) {
           throw new Error(
             `Condensed layout has invalid blocks: [${layout.blocks}]`
           );
@@ -175,15 +172,24 @@ export default function npf2html(
       }
 
       // Use truncate_after if set, otherwise use the last block in blocks
+      // truncate_after=-1 or empty blocks means hide everything
       if (layout.truncate_after !== undefined) {
         truncateAfter = layout.truncate_after;
       } else if (layout.blocks !== undefined) {
-        truncateAfter = layout.blocks[layout.blocks.length - 1];
+        truncateAfter =
+          layout.blocks.length === 0
+            ? -1
+            : layout.blocks[layout.blocks.length - 1];
       }
       break;
     }
   }
   let truncateIndex: number | undefined;
+
+  // If truncateAfter is -1, hide the entire post
+  if (truncateAfter === -1) {
+    truncateIndex = 0;
+  }
 
   const layoutGroups = buildLayoutGroups(options);
 
