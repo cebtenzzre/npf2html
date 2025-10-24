@@ -179,3 +179,38 @@ snapshotNpf2Html('with media: HTML-escapes album', [
     album: '<&">',
   },
 ]);
+
+snapshotNpf2Html('with embed_html: poster without dimensions', [
+  {
+    type: 'audio',
+    album: 'I.',
+    artist: 'Cigarettes After Sex',
+    attribution: {
+      app_name: 'Spotify',
+      display_text: 'Listen on Spotify',
+      logo: {
+        height: 64,
+        type: 'image/png',
+        url: 'https://static.tumblr.com/620021e3d68993e56aadd0b7719f987d/k3htaqs/irQnz1ujc/tumblr_static_spotify-logo_64.png',
+        width: 64,
+      },
+      type: 'app',
+      url: 'https://open.spotify.com/track/5RROFztQ7ua0p9ttJ0U8nv',
+    },
+    embed_html:
+      '<iframe class="spotify_audio_player" src="https://open.spotify.com/embed?uri=spotify%3Atrack%3A5RROFztQ7ua0p9ttJ0U8nv&amp;view=coverart" frameborder="0" allowtransparency="true" width="540" height="620"></iframe>',
+    embed_url:
+      'https://open.spotify.com/embed?uri=spotify%3Atrack%3A5RROFztQ7ua0p9ttJ0U8nv&amp;view=coverart',
+    metadata: {
+      id: 'spotify:track:5RROFztQ7ua0p9ttJ0U8nv',
+    },
+    poster: [
+      {
+        url: 'https://i.scdn.co/image/1e2b79159df4ea01b0b478dc8b6a485efe14c755',
+      },
+    ],
+    provider: 'spotify',
+    title: "Nothing's Gonna Hurt You Baby",
+    url: 'https://open.spotify.com/track/5RROFztQ7ua0p9ttJ0U8nv',
+  },
+]);

@@ -48,7 +48,7 @@ export interface ImageBlock {
  */
 export function renderImage(renderer: Renderer, block: ImageBlock): string {
   const highestResImage = block.media.reduce((best, current) =>
-    best && best.width > current.width ? best : current
+    best && (best.width ?? 0) > (current.width ?? 0) ? best : current
   );
   let result =
     `<figure class="${renderer.prefix}-block-image">` +

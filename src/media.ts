@@ -22,13 +22,13 @@ export interface VisualMedia extends Media {
    * The width of the media asset, if that makes sense (for images and videos,
    * but not for audio).
    */
-  width: number;
+  width?: number;
 
   /**
    * The height of the media asset, if that makes sense (for images and videos,
    * but not for audio).
    */
-  height: number;
+  height?: number;
 
   /**
    * For display purposes, this indicates whether the dimensions are defaults.
@@ -57,7 +57,7 @@ export function renderImageMedia(
   let result = '<img';
 
   const primary = media.reduce((best, current) =>
-    best && best.width > current.width ? best : current
+    best && (best.width ?? 0) > (current.width ?? 0) ? best : current
   );
   result += ` src="${renderer.escape(primary.url)}"`;
   if (options?.alt) result += ` alt="${renderer.escape(options.alt)}"`;

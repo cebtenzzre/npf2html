@@ -92,7 +92,9 @@ export function renderVideo(renderer: Renderer, block: VideoBlock): string {
         ' poster="' +
         renderer.escape(
           block.poster.reduce((biggest, current) =>
-            biggest && biggest.width > current.width ? biggest : current
+            biggest && (biggest.width ?? 0) > (current.width ?? 0)
+              ? biggest
+              : current
           ).url
         ) +
         '"';
